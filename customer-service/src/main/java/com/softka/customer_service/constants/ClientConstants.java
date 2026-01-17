@@ -1,8 +1,8 @@
 package com.softka.customer_service.constants;
 
-public class CustomerConstants {
+public class ClientConstants {
 
-    private CustomerConstants() {
+    private ClientConstants() {
     }
 
     // Messages
@@ -13,7 +13,6 @@ public class CustomerConstants {
 
 
     // Messages exception
-    public static final String CLIENT_ALREADY_EXIST = "Client already exist with id %d";
+    public static final String CLIENT_ALREADY_EXIST = "Client already exist with dni %s";
     public static final String CLIENT_NOT_EXIST = "Client does not exist with id %d";
-    public static final String PARTIAL_CLIENT_NULL = "Status cannot be null";
 }

@@ -1,6 +1,6 @@
 package com.softka.customer_service.exception;
 
-import com.softka.customer_service.constants.CustomerConstants;
+import com.softka.customer_service.constants.ClientConstants;
 import com.softka.customer_service.model.dto.ResponseErrorDto;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
@@ -20,7 +20,7 @@ public class HandlerExceptionController {
     public ResponseEntity<ResponseErrorDto> notFoundException(Exception exception) {
         ResponseErrorDto response = ResponseErrorDto.builder()
                 .code(HttpStatus.NOT_FOUND.value())
-                .error(CustomerConstants.NOT_FOUND)
+                .error(ClientConstants.NOT_FOUND)
                 .message(exception.getMessage())
                 .timestamp(LocalDateTime.now())
                 .build();
@@ -31,7 +31,7 @@ public class HandlerExceptionController {
     public ResponseEntity<ResponseErrorDto> alreadyExistException(Exception exception){
         ResponseErrorDto response = ResponseErrorDto.builder()
                 .code(HttpStatus.CONFLICT.value())
-                .error(CustomerConstants.ALREADY_EXIST)
+                .error(ClientConstants.ALREADY_EXIST)
                 .message(exception.getMessage())
                 .timestamp(LocalDateTime.now())
                 .build();
@@ -42,7 +42,7 @@ public class HandlerExceptionController {
     public ResponseEntity<ResponseErrorDto> messageNotReadableException(Exception exception){
         ResponseErrorDto response = ResponseErrorDto.builder()
                 .code(HttpStatus.BAD_REQUEST.value())
-                .error(CustomerConstants.BAD_REQUEST)
+                .error(ClientConstants.BAD_REQUEST)
                 .message(exception.getMessage())
                 .timestamp(LocalDateTime.now())
                 .build();
@@ -53,7 +53,7 @@ public class HandlerExceptionController {
     public ResponseEntity<ResponseErrorDto> constraintViolationException(ConstraintViolationException exception){
         ResponseErrorDto response = ResponseErrorDto.builder()
                 .code(HttpStatus.BAD_REQUEST.value())
-                .error(CustomerConstants.INVALID_INPUT_DATA)
+                .error(ClientConstants.INVALID_INPUT_DATA)
                 .message(exception.getConstraintViolations().stream()
                         .map(ConstraintViolation::getMessage)
                         .collect(Collectors.joining(", ")))
