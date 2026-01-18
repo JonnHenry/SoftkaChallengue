@@ -1,5 +1,7 @@
 package com.softka.customer_service.service;
 
+import com.softka.customer_service.model.Client;
+import com.softka.customer_service.model.dto.ClientAccountDto;
 import com.softka.customer_service.model.dto.ClientDto;
 
 import java.util.List;
@@ -24,14 +26,29 @@ public interface ClientService {
      @param dni
      @return ClientDto
      */
-    public ClientDto findByDni(String dni);
+    ClientDto findByDniDto(String dni);
+
+
+    /**
+     Get a client by id
+     @param dni
+     @return Client
+     */
+    Client findByDniEntity(String dni);
 
     /**
      Create a client
      @param clientDto
      @return ClientDto
      */
-    public ClientDto create(ClientDto clientDto);
+    ClientDto create(ClientDto clientDto);
+
+    /**
+     Create a client account
+     @param clientAccountDto
+     @return ClientDto
+     */
+    ClientAccountDto create(ClientAccountDto clientAccountDto);
 
     /**
      Update a client

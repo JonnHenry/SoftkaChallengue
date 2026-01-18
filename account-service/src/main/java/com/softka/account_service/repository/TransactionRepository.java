@@ -31,6 +31,6 @@ public interface TransactionRepository extends JpaRepository<Transaction,Long> {
             "FROM Transaction t JOIN t.account a "+
             "WHERE a.clientId=:clientId and t.transactionDate BETWEEN :dateTransactionStart AND :dateTransactionEnd")
     List<BankStatementDto> getAllByAccountClientIdAndDateBetween(@Param("clientId") Long clientId,
-                                                                        @Param("dateTransactionStart") Date dateTransactionStart,
-                                                                        @Param("dateTransactionEnd") Date  dateTransactionEnd);
+                                                                        @Param("dateTransactionStart") LocalDateTime dateTransactionStart,
+                                                                        @Param("dateTransactionEnd") LocalDateTime  dateTransactionEnd);
 }

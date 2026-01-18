@@ -13,7 +13,8 @@ public class AccountConstants {
 
     // Messages exception
     // Messages exception
-    public static final String ACCOUNT_ALREADY_EXIST = "Account already exist with account number %d";
+    public static final String ACCOUNT_ALREADY_EXIST = "Account already exist with account id %d";
+    public static final String ACCOUNT_NUMBER_ALREADY_EXIST = "Account already exist with account number %s";
     public static final String ACCOUNT_NOT_EXIST = "Account does not exist with number %d";
     public static final String PARTIAL_ACCOUNT_NULL = "Status cannot be null";
 

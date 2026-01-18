@@ -5,9 +5,11 @@ import com.softka.account_service.constants.AccountConstants;
 import com.softka.account_service.exception.AlreadyExistException;
 import com.softka.account_service.exception.NotFoundException;
 import com.softka.account_service.mapper.AccountMapper;
+import com.softka.account_service.model.Account;
 import com.softka.account_service.model.dto.AccountDto;
 import com.softka.account_service.repository.AccountRepository;
 import com.softka.account_service.utils.CustomerRestClient;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
@@ -55,16 +57,25 @@ public class AccountServiceImpl implements  AccountService {
     @Override
     public AccountDto create(AccountDto accountDto) {
         Optional<CustomerResponse> clientResponse = customerRestClient.findClientById(accountDto.getClientId());
-        if ( clientResponse.isPresent()
-                || clientResponse.get().getIsActive()==false){
-            throw new NotFoundException(AccountConstants.USER_ACCOUNT_NOT_EXIST);
-        }
+        clientResponse
+                .filter(CustomerResponse::getIsActive)
+                .orElseThrow(() -> new NotFoundException(AccountConstants.USER_ACCOUNT_NOT_EXIST));
 
-        if (Objects.nonNull(accountDto.getAccountId())
-                && accountRepository.findById(accountDto.getAccountId()).isPresent()) {
-            throw new AlreadyExistException(
-                    String.format(AccountConstants.ACCOUNT_ALREADY_EXIST,accountDto.getAccountId()));
-        }
+        Optional.ofNullable(accountDto.getAccountId())
+                .flatMap(accountRepository::findById)
+                .ifPresent(a -> {
+                    throw new AlreadyExistException(
+                            String.format(AccountConstants.ACCOUNT_ALREADY_EXIST, a.getAccountId()));
+                });
+
+        Optional.ofNullable(accountDto.getNumber())
+                .flatMap(accountRepository::findByNumber)
+                .ifPresent(a -> {
+                    throw new AlreadyExistException(
+                            String.format(AccountConstants.ACCOUNT_NUMBER_ALREADY_EXIST, a.getNumber()));
+                });
+
+
         accountDto.setIsActive(true);
         return AccountMapper.INSTANCE.toDTO(
                 accountRepository.save(AccountMapper.INSTANCE.toEntity(accountDto)));
@@ -76,17 +87,24 @@ public class AccountServiceImpl implements  AccountService {
     @Transactional
     @Override
     public AccountDto update(AccountDto accountDto) {
-        if (getById(accountDto.getAccountId())==null) {
-            throw new NotFoundException(String.format(AccountConstants.ACCOUNT_NOT_EXIST,accountDto.getAccountId()));
+        Optional<Account> accountFound = accountRepository.findById(accountDto.getAccountId());
+
+        accountFound
+                .filter(account -> account.getAccountId() != null)
+                .orElseThrow(() -> new NotFoundException(String.format(AccountConstants.ACCOUNT_NOT_EXIST,
+                        accountDto.getAccountId())));
+
+        if (Objects.nonNull(accountDto.getClientId())) {
+            Optional<CustomerResponse> clientResponse = customerRestClient.findClientById(accountDto.getClientId());
+            if (clientResponse.isEmpty()
+                    || clientResponse.get().getIsActive()==false){
+                throw new NotFoundException(AccountConstants.USER_ACCOUNT_NOT_EXIST);
+            }
         }
 
-        Optional<CustomerResponse> clientResponse = customerRestClient.findClientById(accountDto.getClientId());
-        if (clientResponse.isEmpty()
-                || clientResponse.get().getIsActive()==false){
-            throw new NotFoundException(AccountConstants.USER_ACCOUNT_NOT_EXIST);
-        }
-
-        return AccountMapper.INSTANCE.toDTO(accountRepository.save(AccountMapper.INSTANCE.toEntity(accountDto)));
+        return AccountMapper.INSTANCE.toDTO(
+                accountRepository.save(AccountMapper.INSTANCE.updateEntityFromDTO(accountDto,accountFound.get()))
+        );
 
     }
 

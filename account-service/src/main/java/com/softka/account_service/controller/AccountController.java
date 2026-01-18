@@ -1,10 +1,12 @@
 package com.softka.account_service.controller;
 
 import com.softka.account_service.model.dto.AccountDto;
+import com.softka.account_service.model.dto.validation.CreateGroup;
+import com.softka.account_service.model.dto.validation.UpdateGroup;
 import com.softka.account_service.service.AccountService;
-import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
@@ -29,12 +31,13 @@ public class AccountController  {
     }
 
     @PostMapping
-    public ResponseEntity<AccountDto> create(@RequestBody @Valid AccountDto accountDto) {
+    public ResponseEntity<AccountDto> create(@RequestBody @Validated(CreateGroup.class) AccountDto accountDto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(accountService.create(accountDto));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<AccountDto> update(@PathVariable Long id, @RequestBody AccountDto accountDto) {
+    public ResponseEntity<AccountDto> update(@PathVariable Long id,
+                                             @RequestBody @Validated(UpdateGroup.class) AccountDto accountDto) {
         accountDto.setAccountId(id);
         return ResponseEntity.ok(accountService.update(accountDto));
     }

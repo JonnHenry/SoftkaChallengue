@@ -3,11 +3,12 @@ package com.softka.account_service.controller;
 
 import com.softka.account_service.model.dto.BankStatementDto;
 import com.softka.account_service.model.dto.TransactionDto;
+import com.softka.account_service.model.dto.validation.CreateGroup;
 import com.softka.account_service.service.TransactionService;
-import jakarta.validation.Valid;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import java.util.Date;
 import java.util.List;
@@ -33,7 +34,8 @@ public class TransactionController {
     }
 
     @PostMapping
-    public ResponseEntity<TransactionDto> create(@RequestBody @Valid TransactionDto transactionDto){
+    public ResponseEntity<TransactionDto> create(@RequestBody @Validated(CreateGroup.class)
+                                                     TransactionDto transactionDto){
         return ResponseEntity.status(HttpStatus.CREATED).body(transactionService.create(transactionDto));
     }
 
@@ -45,7 +47,5 @@ public class TransactionController {
                 .ok(transactionService.getAllBankStatementByClientIdAndDateBetween(clientId,
                         from,to));
     }
-
-
 
 }

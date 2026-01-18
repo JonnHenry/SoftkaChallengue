@@ -1,19 +1,20 @@
 package com.softka.customer_service.model.dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.softka.customer_service.model.dto.validation.CreateGroup;
 import com.softka.customer_service.model.dto.validation.UpdateGroup;
+import com.softka.customer_service.model.enums.AccountType;
 import com.softka.customer_service.model.enums.Gender;
 import jakarta.validation.constraints.*;
-import lombok.*;
-
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public class ClientDto {
-
+public class ClientAccountDto {
     @EqualsAndHashCode.Include
     private Long id;
 
@@ -27,17 +28,17 @@ public class ClientDto {
     private String name;
 
     @NotEmpty(groups = {CreateGroup.class})
-    @Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[^A-Za-z0-9]).{10,}$",
+    @Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[^A-Za-z0-9]).{10,}$\n",
             message = "En el campo de contraseña solo se permite ingresar un texto que contenga mínimo 10 caracteres, " +
-                    "compuesto por letras (mayúsculas o minúsculas), números y al menos un carácter especial " +
-                    "como !,@,#,$,%,&,*,_ y-",
-            groups = {CreateGroup.class,UpdateGroup.class}
+                    "compuesto por letras (mayúsculas o minúsculas), números y " +
+                    "al menos un carácter especial como !,@,#,$,%,&,*,_ y-",
+            groups = {CreateGroup.class, UpdateGroup.class}
     )
     private String password;
 
     private Gender gender;
 
-    @Min(value =18, message = "El valor mínimo permitido es 18",groups = {CreateGroup.class,UpdateGroup.class})
+    @Min(value =18, message = "El valor mínimo permitido es 18",groups = {CreateGroup.class, UpdateGroup.class})
     @Max(value = 150,message = "El valor máximo permitido es 150",groups = {CreateGroup.class, UpdateGroup.class})
     private Integer age;
 
@@ -45,21 +46,22 @@ public class ClientDto {
     private String address;
 
     @NotEmpty(groups = {CreateGroup.class})
-    @NotEmpty(groups = {CreateGroup.class})
     @Pattern(regexp = "^\\d{7,10}$",message = "El campo debe contener solo números y tener entre 7 y 10 dígitos",
             groups = {CreateGroup.class, UpdateGroup.class})
     private String phone;
 
-    @Getter(AccessLevel.NONE)
-    @Setter(AccessLevel.NONE)
-    @JsonProperty(value = "isActive")
-    private boolean isActive;
+    @NotEmpty(groups = {CreateGroup.class},message = "El número de cuenta no debe de ser vacio")
+    @Pattern(regexp = "\\d+", message = "El número de cuenta debe de ser numerico")
+    private String number;
 
-    public boolean getIsActive() {
-        return isActive;
-    }
+    @NotNull(groups = {CreateGroup.class})
+    private AccountType accountType;
 
-    public void setIsActive(boolean isActive) {
-        this.isActive = isActive;
-    }
+    @Min(value = 0,message = "El valor del monto inicial debe de ser mayor a 0",
+            groups = {CreateGroup.class, UpdateGroup.class})
+    private double initialAmount;
+
+    @NotNull(message = "El id del cliente no puede ser nulo",groups = {CreateGroup.class})
+    private Long clientId;
+
 }

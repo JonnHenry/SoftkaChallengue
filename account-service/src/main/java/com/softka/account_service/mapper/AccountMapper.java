@@ -15,5 +15,5 @@ public interface AccountMapper {
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     @Mapping(target = "accountId", ignore = true)
-    void updateEntityFromDTO(AccountDto accountDto,@MappingTarget Account account);
+    Account updateEntityFromDTO(AccountDto accountDto,@MappingTarget Account account);
 }

@@ -12,8 +12,9 @@ import com.softka.account_service.repository.AccountRepository;
 import com.softka.account_service.repository.TransactionRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -92,8 +93,17 @@ public class TransactionServiceImpl implements TransactionService {
     @Override
     public List<BankStatementDto> getAllBankStatementByClientIdAndDateBetween(Long clientId, Date dateTransactionStart,
                                                                               Date dateTransactionEnd) {
-        return transactionRepository.getAllByAccountClientIdAndDateBetween(clientId, dateTransactionStart,
-                dateTransactionEnd);
+        LocalDateTime from = dateTransactionStart.toInstant()
+                .atZone(ZoneId.systemDefault())
+                .toLocalDateTime();
+
+        LocalDateTime to = dateTransactionEnd.toInstant()
+                .atZone(ZoneId.systemDefault())
+                .toLocalDateTime()
+                .with(LocalTime.MAX);
+
+
+        return transactionRepository.getAllByAccountClientIdAndDateBetween(clientId, from, to);
     }
 
     /**

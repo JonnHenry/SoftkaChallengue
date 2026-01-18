@@ -3,8 +3,11 @@ package com.softka.customer_service.service;
 import com.softka.customer_service.constants.ClientConstants;
 import com.softka.customer_service.exception.AlreadyExistException;
 import com.softka.customer_service.exception.NotFoundException;
+import com.softka.customer_service.mapper.AccountMapper;
 import com.softka.customer_service.mapper.ClientMapper;
 import com.softka.customer_service.model.Client;
+import com.softka.customer_service.model.dto.AccountRequestDto;
+import com.softka.customer_service.model.dto.ClientAccountDto;
 import com.softka.customer_service.model.dto.ClientDto;
 import com.softka.customer_service.repository.ClientRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -49,8 +52,16 @@ public class ClientServiceImpl implements ClientService{
      * {@inheritDoc}
      */
     @Override
-    public ClientDto findByDni(String dni) {
+    public ClientDto findByDniDto(String dni) {
         return clientRepository.findByDni(dni).map(ClientMapper.INSTANCE::toDTO).orElse(null);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Client findByDniEntity(String dni) {
+        return clientRepository.findByDni(dni).orElse(null);
     }
 
     /**
@@ -59,7 +70,7 @@ public class ClientServiceImpl implements ClientService{
     @Transactional
     @Override
     public ClientDto create(ClientDto clientDto) {
-        ClientDto clientFound = findByDni(clientDto.getDni());
+        ClientDto clientFound = findByDniDto(clientDto.getDni());
         if (Objects.nonNull(clientFound)) {
             throw new AlreadyExistException(String.format(ClientConstants.CLIENT_ALREADY_EXIST,clientDto.getDni()));
         }
@@ -67,6 +78,26 @@ public class ClientServiceImpl implements ClientService{
         clientDto.setPassword(passwordEncoder.encode(clientDto.getPassword()));
         return ClientMapper.INSTANCE.toDTO(
                 clientRepository.save(ClientMapper.INSTANCE.toEntity(clientDto)));
+    }
+
+    @Override
+    public ClientAccountDto create(ClientAccountDto clientAccountDto) {
+        //Valido primero de que exista el cliente si el cliente existe pues no es necesario crearlo solo recupero datos
+        //en caso de que no exista lo creo
+        Client clientFound = findByDniEntity(clientAccountDto.getDni());
+        ClientDto clientFoundDto;
+        if (clientFound==null) {
+            clientFoundDto = create(ClientMapper.INSTANCE.toDTO(clientFound));
+        }else {
+            clientFoundDto = update(ClientMapper.INSTANCE.toDTO(clientFound));
+        }
+        AccountRequestDto accountDto = AccountMapper.INSTANCE.toAccountRequestDto(clientAccountDto);
+        accountDto.setClientId(clientFoundDto.getId());
+
+        //TODO: Call a kafka topic to create account
+
+        clientAccountDto.setClientId(clientFoundDto.getId());
+        return null;
     }
 
     /**

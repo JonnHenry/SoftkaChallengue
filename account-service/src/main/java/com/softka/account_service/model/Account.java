@@ -5,6 +5,7 @@ import com.softka.account_service.model.enums.AccountType;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import lombok.*;
 
@@ -24,13 +25,14 @@ public class Account {
     @EqualsAndHashCode.Include
     private Long accountId;
 
-    @Column(name = "ACCOUNT_NUMBER", unique = true, nullable = false)
+    @Column(name = "ACCOUNT_NUMBER", unique = true, nullable = false, updatable = false)
     @Pattern(regexp = "\\d+", message = "El número de cuenta debe de ser numerico")
     @NotEmpty(message = "El número de cuenta es requerido")
     private String number;
 
-    @Column(name = "ACCOUNT_TYPE", nullable = false)
+    @Column(name = "ACCOUNT_TYPE", nullable = false,updatable = false)
     @Enumerated(EnumType.STRING)
+    @NotNull(message = "El tipo de cuenta no puede ser nulo")
     private AccountType accountType;
 
     @Column(name = "INITIAL_AMOUNT", nullable = false)

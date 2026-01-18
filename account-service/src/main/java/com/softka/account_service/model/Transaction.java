@@ -1,8 +1,10 @@
 package com.softka.account_service.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.softka.account_service.model.enums.TransactionType;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Min;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -13,7 +15,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name ="TRANSACTIONS")
+@Table(name ="TTRANSACTIONS")
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Transaction {
 
@@ -38,10 +40,9 @@ public class Transaction {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ACCOUNT_ID", insertable=false,updatable = false)
-    @JsonIgnore
     private Account account;
 
-    @Column(name = "ACCOUNT_ID")
+    @Column(name = "ACCOUNT_ID",nullable = false)
     private Long accountId;
 
 }

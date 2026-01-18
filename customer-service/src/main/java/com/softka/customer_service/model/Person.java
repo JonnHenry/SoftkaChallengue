@@ -1,11 +1,11 @@
 package com.softka.customer_service.model;
 
 
+import com.softka.customer_service.model.dto.validation.CreateGroup;
+import com.softka.customer_service.model.dto.validation.UpdateGroup;
 import com.softka.customer_service.model.enums.Gender;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Pattern;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 import lombok.*;
 
 import java.util.Objects;
@@ -33,12 +33,14 @@ public class Person {
     private Gender gender;
 
     @Column(name = "AGE")
-    private int age;
+    @Min(value =18, message = "El valor mínimo permitido es 18")
+    @Max(value = 150,message = "El valor máximo permitido es 150")
+    private Integer age;
 
     @Column(name = "DNI", unique = true, nullable = false)
     @NotNull(message = "La identificación es requerida")
-    @Size(min = 10, max = 10, message = "La identificación no debe tener más de 10 caracteres")
-    @Pattern(regexp = "^[0-9A-Z\\s]+$", message = "El nombre no puede contener caracteres especiales")
+    @Size(min = 10, max = 10)
+    @Pattern(regexp = "^\\d{10}$",message = "La identificación debe ser de 10 caracteres")
     private String dni;
 
     @Column(name = "ADDRESS",nullable = false)
@@ -46,6 +48,7 @@ public class Person {
 
     @Column(name = "PHONE",nullable = false)
     @Pattern(regexp = "[0-9]+", message = "El teléfono solo debe contener numeros")
+    @Size(min = 7, max = 10, message = "El teléfono no debe tener más de 10 caracteres")
     private String phone;
 
 

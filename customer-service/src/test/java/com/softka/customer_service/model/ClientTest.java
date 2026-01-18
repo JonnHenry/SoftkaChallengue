@@ -8,7 +8,6 @@ import jakarta.validation.ValidatorFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import java.util.Set;
-
 import static org.assertj.core.api.Assertions.assertThat;
 
 class ClientTest {
@@ -17,7 +16,7 @@ class ClientTest {
 
     private Client buildValidClient() {
         Client client = new Client();
-        client.setPassword("securePassword");
+        client.setPassword("sec12Password1@.");
         client.setIsActive(true);
         client.setName("JUAN PEREZ");
         client.setGender(Gender.M);
@@ -57,6 +56,29 @@ class ClientTest {
     }
 
     @Test
+    void shouldFailWhenAgeIsNegative() {
+        Client client = buildValidClient();
+        client.setAge(-1);
+        Set<ConstraintViolation<Client>> violations = validator.validate(client);
+
+        assertThat(violations).isNotEmpty();
+        assertThat(violations)
+                .anyMatch(v -> v.getMessage().contains("El valor mínimo"));
+    }
+
+    @Test
+    void shouldFailWhenAgeIsNoAllowed() {
+        Client client = buildValidClient();
+        client.setAge(180);
+
+        Set<ConstraintViolation<Client>> violations = validator.validate(client);
+
+        assertThat(violations).isNotEmpty();
+        assertThat(violations)
+                .anyMatch(v -> v.getMessage().contains("El valor máximo"));
+    }
+
+    @Test
     void shouldFailWhenNameHasSpecialCharacters() {
         Client client = buildValidClient();
         client.setName("Juan@123");
@@ -77,7 +99,7 @@ class ClientTest {
 
         assertThat(violations)
                 .anyMatch(v -> v.getMessage()
-                        .contains("no debe tener más de 10 caracteres"));
+                        .contains("La identificación debe ser de 10 caracteres"));
     }
 
     @Test
