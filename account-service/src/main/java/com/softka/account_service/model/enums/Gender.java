@@ -1,6 +1,7 @@
-package com.softka.customer_service.model.enums;
+package com.softka.account_service.model.enums;
 
 public enum Gender {
+
     F("Femenino"),
     M("Masculino"),;
 

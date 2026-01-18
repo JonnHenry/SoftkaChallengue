@@ -9,6 +9,7 @@ import com.softka.customer_service.model.dto.ClientDto;
 import com.softka.customer_service.repository.ClientRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -27,6 +28,7 @@ public class ClientServiceImpl implements ClientService{
     /**
      * {@inheritDoc}
      */
+    @Transactional(readOnly = true)
     @Override
     public List<ClientDto> getAll() {
         return clientRepository.findAll()
@@ -54,6 +56,7 @@ public class ClientServiceImpl implements ClientService{
     /**
      * {@inheritDoc}
      */
+    @Transactional
     @Override
     public ClientDto create(ClientDto clientDto) {
         ClientDto clientFound = findByDni(clientDto.getDni());
@@ -69,6 +72,7 @@ public class ClientServiceImpl implements ClientService{
     /**
      * {@inheritDoc}
      */
+    @Transactional
     @Override
     public ClientDto update(ClientDto clientDto) {
         Long id = clientDto.getId();
@@ -85,6 +89,7 @@ public class ClientServiceImpl implements ClientService{
     /**
      * {@inheritDoc}
      */
+    @Transactional
     @Override
     public void deleteById(Long id) {
         Client client = clientRepository.findById(id).orElseThrow(

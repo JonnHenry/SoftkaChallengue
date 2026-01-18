@@ -21,7 +21,7 @@ public class Client extends Person {
 
     @Getter(AccessLevel.NONE)
     @Setter(AccessLevel.NONE)
-    @Column(name = "ISACTIVE", nullable = false)
+    @Column(name = "IS_ACTIVE", nullable = false)
     private boolean isActive;
 
     public boolean getIsActive(){
