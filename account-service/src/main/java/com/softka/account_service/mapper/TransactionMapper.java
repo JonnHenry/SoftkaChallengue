@@ -15,6 +15,7 @@ public interface TransactionMapper {
 
 
     TransactionDto toDTO(Transaction transaction);
+    @Mapping(target  = "account", ignore = true)
     Transaction toEntity(TransactionDto transactionDto);
 
 }

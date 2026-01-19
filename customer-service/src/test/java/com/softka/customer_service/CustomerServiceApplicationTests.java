@@ -44,7 +44,7 @@ class CustomerServiceApplicationTests {
         assertThat(transactionManager).isNotNull();
 
         //Critical beans
-        assertThat(applicationContext.containsBean("clientServiceImpl"))
+        assertThat(applicationContext.containsBean("IClientServiceImpl"))
                 .isTrue();
 
         assertThat(applicationContext.containsBean("clientRepository"))

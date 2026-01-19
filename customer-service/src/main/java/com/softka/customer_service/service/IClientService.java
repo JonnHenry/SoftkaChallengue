@@ -6,7 +6,7 @@ import com.softka.customer_service.model.dto.ClientDto;
 
 import java.util.List;
 
-public interface ClientService {
+public interface IClientService {
 
     /**
         Get all clients

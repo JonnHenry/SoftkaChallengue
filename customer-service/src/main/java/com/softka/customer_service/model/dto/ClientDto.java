@@ -10,6 +10,7 @@ import lombok.*;
 
 @Data
 @AllArgsConstructor
+@Builder
 @NoArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class ClientDto {

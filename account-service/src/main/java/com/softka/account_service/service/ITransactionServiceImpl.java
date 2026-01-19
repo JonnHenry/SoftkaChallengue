@@ -22,12 +22,12 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
-public class TransactionServiceImpl implements TransactionService {
+public class ITransactionServiceImpl implements ITransactionService {
 
     private final TransactionRepository transactionRepository;
     private final AccountRepository accountRepository;
 
-    public TransactionServiceImpl(TransactionRepository transactionRepository,  AccountRepository accountRepository) {
+    public ITransactionServiceImpl(TransactionRepository transactionRepository, AccountRepository accountRepository) {
         this.transactionRepository = transactionRepository;
         this.accountRepository = accountRepository;
     }

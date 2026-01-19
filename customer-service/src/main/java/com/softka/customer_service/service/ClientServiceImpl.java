@@ -1,31 +1,44 @@
 package com.softka.customer_service.service;
 
 import com.softka.customer_service.constants.ClientConstants;
+import com.softka.customer_service.events.ClientEvent;
 import com.softka.customer_service.exception.AlreadyExistException;
 import com.softka.customer_service.exception.NotFoundException;
-import com.softka.customer_service.mapper.AccountMapper;
 import com.softka.customer_service.mapper.ClientMapper;
 import com.softka.customer_service.model.Client;
-import com.softka.customer_service.model.dto.AccountRequestDto;
 import com.softka.customer_service.model.dto.ClientAccountDto;
 import com.softka.customer_service.model.dto.ClientDto;
+import com.softka.customer_service.model.dto.EventAccountRequest;
+import com.softka.customer_service.model.enums.EventType;
 import com.softka.customer_service.repository.ClientRepository;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
+import java.util.UUID;
 import java.util.stream.Collectors;
+import org.springframework.core.env.Environment;
 
 @Service
-public class ClientServiceImpl implements ClientService{
+public class ClientServiceImpl implements IClientService {
+
+    @Value("${kafka.client-topic}")
+    private String clientTopic;
 
     private final ClientRepository clientRepository;
     private final PasswordEncoder passwordEncoder;
+    private final KafkaProducerService kafkaProducerService;
+    private final Environment env;
 
-    public ClientServiceImpl(ClientRepository clientRepository,PasswordEncoder passwordEncoder) {
+    public ClientServiceImpl(ClientRepository clientRepository, PasswordEncoder passwordEncoder,
+                             KafkaProducerService kafkaProducerService, Environment env) {
         this.clientRepository = clientRepository;
         this.passwordEncoder = passwordEncoder;
+        this.kafkaProducerService = kafkaProducerService;
+        this.env = env;
     }
 
     /**
@@ -81,23 +94,41 @@ public class ClientServiceImpl implements ClientService{
     }
 
     @Override
+    @Transactional
     public ClientAccountDto create(ClientAccountDto clientAccountDto) {
-        //Valido primero de que exista el cliente si el cliente existe pues no es necesario crearlo solo recupero datos
-        //en caso de que no exista lo creo
         Client clientFound = findByDniEntity(clientAccountDto.getDni());
         ClientDto clientFoundDto;
         if (clientFound==null) {
+            clientFound = Client.builder()
+                    .dni(clientAccountDto.getDni())
+                    .name(clientAccountDto.getName())
+                    .password(clientAccountDto.getPassword())
+                    .gender(clientAccountDto.getGender())
+                    .age(clientAccountDto.getAge())
+                    .address(clientAccountDto.getAddress())
+                    .phone(clientAccountDto.getPhone())
+                    .build();
+
             clientFoundDto = create(ClientMapper.INSTANCE.toDTO(clientFound));
         }else {
             clientFoundDto = update(ClientMapper.INSTANCE.toDTO(clientFound));
         }
-        AccountRequestDto accountDto = AccountMapper.INSTANCE.toAccountRequestDto(clientAccountDto);
-        accountDto.setClientId(clientFoundDto.getId());
+        EventAccountRequest accountRequest = EventAccountRequest.builder()
+                .accountNumber(clientAccountDto.getNumberAccount())
+                .initialBalance(clientAccountDto.getInitialAmount())
+                .typeAccount(clientAccountDto.getAccountType())
+                .clientId(clientFoundDto.getId())
+                .build();
 
-        //TODO: Call a kafka topic to create account
+        ClientEvent event = new ClientEvent();
+        event.setId(UUID.randomUUID().toString());
+        event.setDate(new Date());
+        event.setData(accountRequest);
+        event.setType(EventType.CREATED);
+        kafkaProducerService.sendPublish(clientTopic, event);
 
         clientAccountDto.setClientId(clientFoundDto.getId());
-        return null;
+        return clientAccountDto;
     }
 
     /**

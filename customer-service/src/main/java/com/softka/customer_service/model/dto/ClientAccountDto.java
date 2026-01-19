@@ -28,7 +28,7 @@ public class ClientAccountDto {
     private String name;
 
     @NotEmpty(groups = {CreateGroup.class})
-    @Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[^A-Za-z0-9]).{10,}$\n",
+    @Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[^A-Za-z0-9]).{10,}$",
             message = "En el campo de contraseña solo se permite ingresar un texto que contenga mínimo 10 caracteres, " +
                     "compuesto por letras (mayúsculas o minúsculas), números y " +
                     "al menos un carácter especial como !,@,#,$,%,&,*,_ y-",
@@ -52,7 +52,7 @@ public class ClientAccountDto {
 
     @NotEmpty(groups = {CreateGroup.class},message = "El número de cuenta no debe de ser vacio")
     @Pattern(regexp = "\\d+", message = "El número de cuenta debe de ser numerico")
-    private String number;
+    private String numberAccount;
 
     @NotNull(groups = {CreateGroup.class})
     private AccountType accountType;

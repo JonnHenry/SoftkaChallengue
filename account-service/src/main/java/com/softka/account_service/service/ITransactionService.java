@@ -3,12 +3,10 @@ package com.softka.account_service.service;
 import com.softka.account_service.model.dto.BankStatementDto;
 import com.softka.account_service.model.dto.TransactionDto;
 import org.springframework.data.repository.query.Param;
-
-import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
-public interface TransactionService {
+public interface ITransactionService {
     /**
      Get all transactions
      @return List<TransactionDto>

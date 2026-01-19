@@ -5,10 +5,11 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import lombok.*;
-
+import lombok.experimental.SuperBuilder;
 
 
 @Data
+@SuperBuilder
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper=false)
 @PrimaryKeyJoinColumn(name = "PERSON_ID")

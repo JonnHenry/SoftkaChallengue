@@ -9,7 +9,6 @@ import com.softka.account_service.model.Account;
 import com.softka.account_service.model.dto.AccountDto;
 import com.softka.account_service.repository.AccountRepository;
 import com.softka.account_service.utils.CustomerRestClient;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
@@ -18,7 +17,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
-public class AccountServiceImpl implements  AccountService {
+public class AccountServiceImpl implements IAccountService {
 
     private final AccountRepository accountRepository;
 

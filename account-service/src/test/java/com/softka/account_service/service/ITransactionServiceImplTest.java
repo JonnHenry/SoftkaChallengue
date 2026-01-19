@@ -19,10 +19,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 @SpringBootTest
 @ActiveProfiles("test")
 @Transactional
-class TransactionServiceImplTest {
+class ITransactionServiceImplTest {
 
     @Autowired
-    private TransactionService transactionService;
+    private ITransactionService ITransactionService;
 
     @Autowired
     private AccountRepository accountRepository;
@@ -52,7 +52,7 @@ class TransactionServiceImplTest {
         transaction.setAccountId(savedAccount.getAccountId());
 
         //Act
-        TransactionDto transactionCreated = transactionService.create(TransactionMapper.INSTANCE.toDTO(transaction));
+        TransactionDto transactionCreated = ITransactionService.create(TransactionMapper.INSTANCE.toDTO(transaction));
 
         Transaction transactionFound =
                 transactionRepository.findById(transactionCreated.getTransactionId()).get();

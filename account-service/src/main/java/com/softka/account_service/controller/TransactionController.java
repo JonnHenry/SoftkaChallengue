@@ -4,7 +4,7 @@ package com.softka.account_service.controller;
 import com.softka.account_service.model.dto.BankStatementDto;
 import com.softka.account_service.model.dto.TransactionDto;
 import com.softka.account_service.model.dto.validation.CreateGroup;
-import com.softka.account_service.service.TransactionService;
+import com.softka.account_service.service.ITransactionService;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,26 +17,26 @@ import java.util.List;
 @RequestMapping("/api/movimientos")
 public class TransactionController {
 
-    private final TransactionService transactionService;
+    private final ITransactionService ITransactionService;
 
-    public TransactionController(TransactionService transactionService) {
-        this.transactionService = transactionService;
+    public TransactionController(ITransactionService ITransactionService) {
+        this.ITransactionService = ITransactionService;
     }
 
     @GetMapping
     public ResponseEntity<List<TransactionDto>> getAll(){
-        return ResponseEntity.ok(transactionService.getAll());
+        return ResponseEntity.ok(ITransactionService.getAll());
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<TransactionDto> get(@PathVariable Long id){
-        return ResponseEntity.ok(transactionService.getById(id));
+        return ResponseEntity.ok(ITransactionService.getById(id));
     }
 
     @PostMapping
     public ResponseEntity<TransactionDto> create(@RequestBody @Validated(CreateGroup.class)
                                                      TransactionDto transactionDto){
-        return ResponseEntity.status(HttpStatus.CREATED).body(transactionService.create(transactionDto));
+        return ResponseEntity.status(HttpStatus.CREATED).body(ITransactionService.create(transactionDto));
     }
 
     @GetMapping("/{clientId}/reportes")
@@ -44,7 +44,7 @@ public class TransactionController {
                                                          @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date from,
                                                          @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date to) {
         return ResponseEntity
-                .ok(transactionService.getAllBankStatementByClientIdAndDateBetween(clientId,
+                .ok(ITransactionService.getAllBankStatementByClientIdAndDateBetween(clientId,
                         from,to));
     }
 
