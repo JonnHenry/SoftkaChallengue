@@ -136,7 +136,7 @@ DELETE /api/cuentas/{id}
 📌 Publica evento en Kafka (`CLIENTS`) para enviar el evento de creación de una cuenta que luego es escuchada en el account-services y es procesada de manera asicrona.
 
 ```http
-POST /api/cuentas
+POST /api/clientes/cuentas
 ```
 
 ```json
