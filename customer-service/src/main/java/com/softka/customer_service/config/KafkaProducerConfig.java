@@ -1,6 +1,6 @@
 package com.softka.customer_service.config;
 
-import com.softka.customer_service.events.Event;
+import com.softka.events.Event;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

@@ -1,7 +1,7 @@
 package com.softka.account_service.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.softka.account_service.model.enums.AccountType;
+import com.softka.enums.AccountType;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotEmpty;

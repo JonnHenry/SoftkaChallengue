@@ -2,7 +2,7 @@ package com.softka.customer_service.mapper;
 
 
 import com.softka.customer_service.model.Client;
-import com.softka.customer_service.model.dto.ClientDto;
+import com.softka.customer_service.dto.ClientDto;
 import org.mapstruct.*;
 import org.mapstruct.factory.Mappers;
 

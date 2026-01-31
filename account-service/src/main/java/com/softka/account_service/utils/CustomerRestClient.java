@@ -1,6 +1,6 @@
 package com.softka.account_service.utils;
 
-import com.softka.account_service.client.CustomerResponse;
+import com.softka.account_service.dto.CustomerResponseDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpMethod;
@@ -20,15 +20,15 @@ public class CustomerRestClient {
     private static final RestTemplate restTemplate = new RestTemplate();
 
 
-    public Optional<CustomerResponse> findClientById(Long id){
+    public Optional<CustomerResponseDto> findClientById(Long id){
         try {
             String url = serviceUrl+"/api/clientes/"+id;
             log.warn("url: {}", url);
-            ResponseEntity<CustomerResponse> clientResponse = restTemplate.exchange(
+            ResponseEntity<CustomerResponseDto> clientResponse = restTemplate.exchange(
                     url,
                     HttpMethod.GET,
                     null,
-                    CustomerResponse.class
+                    CustomerResponseDto.class
             );
             return Optional.ofNullable(clientResponse.getBody());
 

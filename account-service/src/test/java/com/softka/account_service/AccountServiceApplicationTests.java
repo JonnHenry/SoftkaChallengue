@@ -47,7 +47,7 @@ class AccountServiceApplicationTests {
         assertThat(applicationContext.containsBean("accountServiceImpl"))
                 .isTrue();
 
-        assertThat(applicationContext.containsBean("ITransactionServiceImpl"))
+        assertThat(applicationContext.containsBean("transactionServiceImpl"))
                 .isTrue();
 
         assertThat(applicationContext.containsBean("accountRepository"))

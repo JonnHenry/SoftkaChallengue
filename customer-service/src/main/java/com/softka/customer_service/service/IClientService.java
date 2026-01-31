@@ -1,8 +1,8 @@
 package com.softka.customer_service.service;
 
+import com.softka.customer_service.dto.ClientAccountDto;
+import com.softka.customer_service.dto.ClientDto;
 import com.softka.customer_service.model.Client;
-import com.softka.customer_service.model.dto.ClientAccountDto;
-import com.softka.customer_service.model.dto.ClientDto;
 
 import java.util.List;
 

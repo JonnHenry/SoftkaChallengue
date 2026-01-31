@@ -4,14 +4,6 @@ public class AccountConstants {
 
     private AccountConstants() {}
 
-    // Response Menssages
-    public static final String NOT_FOUND = "Not Found";
-    public static final String ALREADY_EXIST = "Already exists";
-    public static final String INVALID_INPUT_DATA = "Invalid input data";
-    public static final String UNPROCESABLE_ENTITY = "Unprocesable entity";
-    public static final String BAD_REQUEST = "Bad request";
-
-    // Messages exception
     // Messages exception
     public static final String ACCOUNT_ALREADY_EXIST = "Account already exist with account id %d";
     public static final String ACCOUNT_NUMBER_ALREADY_EXIST = "Account already exist with account number %s";

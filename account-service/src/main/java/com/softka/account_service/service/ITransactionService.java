@@ -1,7 +1,7 @@
 package com.softka.account_service.service;
 
-import com.softka.account_service.model.dto.BankStatementDto;
-import com.softka.account_service.model.dto.TransactionDto;
+import com.softka.account_service.dto.BankStatementDto;
+import com.softka.account_service.dto.TransactionDto;
 import org.springframework.data.repository.query.Param;
 import java.util.Date;
 import java.util.List;

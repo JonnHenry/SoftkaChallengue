@@ -1,9 +1,7 @@
 package com.softka.customer_service.model;
 
 
-import com.softka.customer_service.model.dto.validation.CreateGroup;
-import com.softka.customer_service.model.dto.validation.UpdateGroup;
-import com.softka.customer_service.model.enums.Gender;
+import com.softka.enums.Gender;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.*;

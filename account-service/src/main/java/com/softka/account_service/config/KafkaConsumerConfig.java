@@ -1,7 +1,7 @@
 package com.softka.account_service.config;
 
 
-import com.softka.account_service.events.Event;
+import com.softka.events.Event;
 import lombok.RequiredArgsConstructor;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.springframework.context.annotation.Bean;

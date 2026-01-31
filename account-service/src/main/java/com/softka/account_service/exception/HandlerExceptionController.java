@@ -1,7 +1,9 @@
 package com.softka.account_service.exception;
 
-import com.softka.account_service.constants.AccountConstants;
-import com.softka.account_service.model.dto.ResponseErrorDto;
+import com.softka.constants.CommonConstants;
+import com.softka.dto.ResponseErrorDto;
+import com.softka.exception.AlreadyExistException;
+import com.softka.exception.NotFoundException;
 import jakarta.validation.ConstraintViolation;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,7 +24,7 @@ public class HandlerExceptionController {
     public ResponseEntity<ResponseErrorDto> notFoundException(Exception exception) {
         ResponseErrorDto response = ResponseErrorDto.builder()
                 .code(HttpStatus.NOT_FOUND.value())
-                .error(AccountConstants.NOT_FOUND)
+                .error(CommonConstants.NOT_FOUND)
                 .message(exception.getMessage())
                 .timestamp(LocalDateTime.now())
                 .build();
@@ -33,7 +35,7 @@ public class HandlerExceptionController {
     public ResponseEntity<ResponseErrorDto> nonExecutableTransactionExeption(Exception exception) {
         ResponseErrorDto response = ResponseErrorDto.builder()
                 .code(HttpStatus.UNPROCESSABLE_ENTITY.value())
-                .error(AccountConstants.UNPROCESABLE_ENTITY)
+                .error(CommonConstants.UNPROCESABLE_ENTITY)
                 .message(exception.getMessage())
                 .timestamp(LocalDateTime.now())
                 .build();
@@ -44,7 +46,7 @@ public class HandlerExceptionController {
     public ResponseEntity<ResponseErrorDto> alreadyExistException(Exception exception){
         ResponseErrorDto response = ResponseErrorDto.builder()
                 .code(HttpStatus.CONFLICT.value())
-                .error(AccountConstants.ALREADY_EXIST)
+                .error(CommonConstants.ALREADY_EXIST)
                 .message(exception.getMessage())
                 .timestamp(LocalDateTime.now())
                 .build();
@@ -55,7 +57,7 @@ public class HandlerExceptionController {
     public ResponseEntity<ResponseErrorDto> messageNotReadableException(Exception exception){
         ResponseErrorDto response = ResponseErrorDto.builder()
                 .code(HttpStatus.BAD_REQUEST.value())
-                .error(AccountConstants.BAD_REQUEST)
+                .error(CommonConstants.BAD_REQUEST)
                 .message(exception.getMessage())
                 .timestamp(LocalDateTime.now())
                 .build();
@@ -66,7 +68,7 @@ public class HandlerExceptionController {
     public ResponseEntity<ResponseErrorDto> constraintViolationException(ConstraintViolationException exception){
         ResponseErrorDto response = ResponseErrorDto.builder()
                 .code(HttpStatus.BAD_REQUEST.value())
-                .error(AccountConstants.INVALID_INPUT_DATA)
+                .error(CommonConstants.INVALID_INPUT_DATA)
                 .message(exception.getConstraintViolations().stream()
                         .map(ConstraintViolation::getMessage)
                         .collect(Collectors.joining(", ")))
@@ -89,7 +91,7 @@ public class HandlerExceptionController {
 
         ResponseErrorDto response = ResponseErrorDto.builder()
                 .code(HttpStatus.BAD_REQUEST.value())
-                .error(AccountConstants.INVALID_INPUT_DATA)
+                .error(CommonConstants.INVALID_INPUT_DATA)
                 .message(errors.toString())
                 .timestamp(LocalDateTime.now())
                 .build();

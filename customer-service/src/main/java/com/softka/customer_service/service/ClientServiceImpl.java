@@ -1,16 +1,16 @@
 package com.softka.customer_service.service;
 
 import com.softka.customer_service.constants.ClientConstants;
-import com.softka.customer_service.events.ClientEvent;
-import com.softka.customer_service.exception.AlreadyExistException;
-import com.softka.customer_service.exception.NotFoundException;
 import com.softka.customer_service.mapper.ClientMapper;
 import com.softka.customer_service.model.Client;
-import com.softka.customer_service.model.dto.ClientAccountDto;
-import com.softka.customer_service.model.dto.ClientDto;
-import com.softka.customer_service.model.dto.EventAccountRequest;
-import com.softka.customer_service.model.enums.EventType;
+import com.softka.customer_service.dto.ClientAccountDto;
+import com.softka.customer_service.dto.ClientDto;
 import com.softka.customer_service.repository.ClientRepository;
+import com.softka.dto.EventAccountRequest;
+import com.softka.enums.EventType;
+import com.softka.events.ClientEvent;
+import com.softka.exception.AlreadyExistException;
+import com.softka.exception.NotFoundException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;

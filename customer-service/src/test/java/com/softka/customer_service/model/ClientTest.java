@@ -1,6 +1,6 @@
 package com.softka.customer_service.model;
 
-import com.softka.customer_service.model.enums.Gender;
+import com.softka.enums.Gender;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validation;
 import jakarta.validation.Validator;

@@ -9,6 +9,10 @@ RUN ./gradlew build -x test --warning-mode all || true
 
 COPY --chown=gradle:gradle src ./src
 
+# Copiar la librería compartida a la carpeta libs dentro del contenedor
+COPY libs /app/libs
+
+
 RUN ./gradlew clean build -x test --no-daemon
 
 # Stage 2: Runtime image with Java 17

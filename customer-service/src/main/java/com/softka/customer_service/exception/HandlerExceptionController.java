@@ -1,7 +1,9 @@
 package com.softka.customer_service.exception;
 
-import com.softka.customer_service.constants.ClientConstants;
-import com.softka.customer_service.model.dto.ResponseErrorDto;
+import com.softka.constants.CommonConstants;
+import com.softka.dto.ResponseErrorDto;
+import com.softka.exception.AlreadyExistException;
+import com.softka.exception.NotFoundException;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
 import org.springframework.http.HttpStatus;
@@ -23,7 +25,7 @@ public class HandlerExceptionController {
     public ResponseEntity<ResponseErrorDto> notFoundException(Exception exception) {
         ResponseErrorDto response = ResponseErrorDto.builder()
                 .code(HttpStatus.NOT_FOUND.value())
-                .error(ClientConstants.NOT_FOUND)
+                .error(CommonConstants.NOT_FOUND)
                 .message(exception.getMessage())
                 .timestamp(LocalDateTime.now())
                 .build();
@@ -34,7 +36,7 @@ public class HandlerExceptionController {
     public ResponseEntity<ResponseErrorDto> alreadyExistException(Exception exception){
         ResponseErrorDto response = ResponseErrorDto.builder()
                 .code(HttpStatus.CONFLICT.value())
-                .error(ClientConstants.ALREADY_EXIST)
+                .error(CommonConstants.ALREADY_EXIST)
                 .message(exception.getMessage())
                 .timestamp(LocalDateTime.now())
                 .build();
@@ -45,7 +47,7 @@ public class HandlerExceptionController {
     public ResponseEntity<ResponseErrorDto> messageNotReadableException(Exception exception){
         ResponseErrorDto response = ResponseErrorDto.builder()
                 .code(HttpStatus.BAD_REQUEST.value())
-                .error(ClientConstants.BAD_REQUEST)
+                .error(CommonConstants.BAD_REQUEST)
                 .message(exception.getMessage())
                 .timestamp(LocalDateTime.now())
                 .build();
@@ -56,7 +58,7 @@ public class HandlerExceptionController {
     public ResponseEntity<ResponseErrorDto> constraintViolationException(ConstraintViolationException exception){
         ResponseErrorDto response = ResponseErrorDto.builder()
                 .code(HttpStatus.BAD_REQUEST.value())
-                .error(ClientConstants.INVALID_INPUT_DATA)
+                .error(CommonConstants.INVALID_INPUT_DATA)
                 .message(exception.getConstraintViolations().stream()
                         .map(ConstraintViolation::getMessage)
                         .collect(Collectors.joining(", ")))
@@ -80,7 +82,7 @@ public class HandlerExceptionController {
 
         ResponseErrorDto response = ResponseErrorDto.builder()
                 .code(HttpStatus.BAD_REQUEST.value())
-                .error(ClientConstants.INVALID_INPUT_DATA)
+                .error(CommonConstants.INVALID_INPUT_DATA)
                 .message(errors.toString())
                 .timestamp(LocalDateTime.now())
                 .build();
