@@ -1,9 +1,9 @@
 package com.softka.account_service.controller;
 
-import com.softka.account_service.model.dto.AccountDto;
-import com.softka.account_service.model.dto.validation.CreateGroup;
-import com.softka.account_service.model.dto.validation.UpdateGroup;
+import com.softka.account_service.dto.AccountDto;
 import com.softka.account_service.service.IAccountService;
+import com.softka.validator.CreateGroup;
+import com.softka.validator.UpdateGroup;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;

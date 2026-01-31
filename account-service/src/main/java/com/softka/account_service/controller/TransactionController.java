@@ -1,10 +1,9 @@
 package com.softka.account_service.controller;
 
-
-import com.softka.account_service.model.dto.BankStatementDto;
-import com.softka.account_service.model.dto.TransactionDto;
-import com.softka.account_service.model.dto.validation.CreateGroup;
+import com.softka.account_service.dto.BankStatementDto;
+import com.softka.account_service.dto.TransactionDto;
 import com.softka.account_service.service.ITransactionService;
+import com.softka.validator.CreateGroup;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

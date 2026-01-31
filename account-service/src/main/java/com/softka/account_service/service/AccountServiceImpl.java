@@ -1,14 +1,14 @@
 package com.softka.account_service.service;
 
-import com.softka.account_service.client.CustomerResponse;
+import com.softka.account_service.dto.CustomerResponseDto;
 import com.softka.account_service.constants.AccountConstants;
-import com.softka.account_service.exception.AlreadyExistException;
-import com.softka.account_service.exception.NotFoundException;
 import com.softka.account_service.mapper.AccountMapper;
 import com.softka.account_service.model.Account;
-import com.softka.account_service.model.dto.AccountDto;
+import com.softka.account_service.dto.AccountDto;
 import com.softka.account_service.repository.AccountRepository;
 import com.softka.account_service.utils.CustomerRestClient;
+import com.softka.exception.AlreadyExistException;
+import com.softka.exception.NotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
@@ -55,9 +55,9 @@ public class AccountServiceImpl implements IAccountService {
     @Transactional
     @Override
     public AccountDto create(AccountDto accountDto) {
-        Optional<CustomerResponse> clientResponse = customerRestClient.findClientById(accountDto.getClientId());
+        Optional<CustomerResponseDto> clientResponse = customerRestClient.findClientById(accountDto.getClientId());
         clientResponse
-                .filter(CustomerResponse::getIsActive)
+                .filter(CustomerResponseDto::getIsActive)
                 .orElseThrow(() -> new NotFoundException(AccountConstants.USER_ACCOUNT_NOT_EXIST));
 
         Optional.ofNullable(accountDto.getAccountId())
@@ -94,7 +94,7 @@ public class AccountServiceImpl implements IAccountService {
                         accountDto.getAccountId())));
 
         if (Objects.nonNull(accountDto.getClientId())) {
-            Optional<CustomerResponse> clientResponse = customerRestClient.findClientById(accountDto.getClientId());
+            Optional<CustomerResponseDto> clientResponse = customerRestClient.findClientById(accountDto.getClientId());
             if (clientResponse.isEmpty()
                     || clientResponse.get().getIsActive()==false){
                 throw new NotFoundException(AccountConstants.USER_ACCOUNT_NOT_EXIST);

@@ -1,8 +1,8 @@
 package com.softka.customer_service.service;
 
 
-import com.softka.customer_service.events.ClientEvent;
-import com.softka.customer_service.events.Event;
+import com.softka.events.ClientEvent;
+import com.softka.events.Event;
 import lombok.RequiredArgsConstructor;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;

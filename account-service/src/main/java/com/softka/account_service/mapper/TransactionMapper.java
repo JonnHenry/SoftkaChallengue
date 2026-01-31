@@ -1,9 +1,8 @@
 package com.softka.account_service.mapper;
 
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.softka.account_service.model.Transaction;
-import com.softka.account_service.model.dto.TransactionDto;
+import com.softka.account_service.dto.TransactionDto;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;

@@ -5,7 +5,7 @@ plugins {
 }
 
 group = 'com.softka'
-version = '1.0.0-SNAPSHOT'
+version = '1.0.0-RELEASE'
 description = 'Artifact to manage users'
 
 java {
@@ -21,6 +21,7 @@ configurations {
 }
 
 repositories {
+    mavenLocal()
 	mavenCentral()
 }
 
@@ -29,6 +30,9 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-validation'
+
+    //Shared
+    implementation files("$rootDir/libs/common-lib-1.0.0-RELEASE.jar")
 
     //Map struct
     implementation 'org.mapstruct:mapstruct:1.6.3'

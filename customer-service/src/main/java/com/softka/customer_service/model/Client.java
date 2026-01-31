@@ -1,6 +1,5 @@
 package com.softka.customer_service.model;
 
-import com.softka.customer_service.model.dto.validation.CreateGroup;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;

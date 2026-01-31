@@ -1,12 +1,12 @@
 package com.softka.account_service.service;
 
 
-import com.softka.account_service.events.ClientEvent;
-import com.softka.account_service.events.Event;
-import com.softka.account_service.exception.NotFoundException;
-import com.softka.account_service.model.dto.AccountDto;
-import com.softka.account_service.model.dto.EventAccountRequest;
-import com.softka.account_service.model.enums.EventType;
+import com.softka.account_service.dto.AccountDto;
+import com.softka.dto.EventAccountRequest;
+import com.softka.enums.EventType;
+import com.softka.events.ClientEvent;
+import com.softka.events.Event;
+import com.softka.exception.NotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.annotation.KafkaListener;

@@ -1,10 +1,10 @@
 package com.softka.customer_service.controller;
 
-import com.softka.customer_service.model.dto.ClientAccountDto;
-import com.softka.customer_service.model.dto.ClientDto;
-import com.softka.customer_service.model.dto.validation.CreateGroup;
-import com.softka.customer_service.model.dto.validation.UpdateGroup;
+import com.softka.customer_service.dto.ClientAccountDto;
+import com.softka.customer_service.dto.ClientDto;
 import com.softka.customer_service.service.IClientService;
+import com.softka.validator.CreateGroup;
+import com.softka.validator.UpdateGroup;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;

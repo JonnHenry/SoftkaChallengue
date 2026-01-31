@@ -1,6 +1,8 @@
 # 📌 Sofka Challenge – Banking Microservices
 
-Este proyecto implementa una **arquitectura de microservicios** para la gestión de **clientes, cuentas bancarias y movimientos**, desarrollado como parte del **Sofka Challenge**.
+Este proyecto implementa una **arquitectura de microservicios** para la gestión de **clientes, cuentas bancarias y movimientos**, desarrollado como parte del **Sofka Challenge**.  
+
+Se utilizó **una arquitectura por capas** para separar responsabilidades y mejorar la mantenibilidad del código, así como **una librería compartida (`common-lib`)** que contiene componentes reutilizables para ambos microservicios.
 
 La solución utiliza **Spring Boot**, **Apache Kafka** para comunicación asíncrona, **PostgreSQL** como base de datos y **Docker Compose** para el despliegue completo del entorno.
 
@@ -50,6 +52,25 @@ El sistema está compuesto por los siguientes servicios:
 ```bash
 docker-compose up --build
 ```
+
+## 🧪 Tests
+
+### Unitarios
+
+**Sin Mockito (tests puros de clases):**
+- `ClientTest`
+
+**Con Mockito (simulación de dependencias y testing de capa Controller):**
+- `ClientControllerTest`
+- `AccountControllerTest`
+
+### Integración
+
+**Tests que levantan el contexto y validan la interacción de múltiples capas:**
+- `ITransactionServiceImplTest`
+- `AccountServiceApplicationTests`
+- `CustomerServiceApplicationTests`
+
 
 ## 🌐 Endpoints Disponibles
 

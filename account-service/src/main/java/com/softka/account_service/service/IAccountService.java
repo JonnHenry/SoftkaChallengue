@@ -1,6 +1,6 @@
 package com.softka.account_service.service;
 
-import com.softka.account_service.model.dto.AccountDto;
+import com.softka.account_service.dto.AccountDto;
 import java.util.List;
 
 public interface IAccountService {
