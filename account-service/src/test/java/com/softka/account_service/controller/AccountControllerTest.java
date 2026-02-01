@@ -2,25 +2,26 @@ package com.softka.account_service.controller;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.softka.account_service.config.TestSecurityConfig;
 import com.softka.account_service.dto.AccountDto;
 import com.softka.account_service.service.IAccountService;
 import com.softka.enums.AccountType;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import java.util.List;
 import static org.mockito.ArgumentMatchers.any;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@WebMvcTest(AccountController.class)
-@Import(TestSecurityConfig.class)
+@WebMvcTest(controllers = AccountController.class,
+        excludeAutoConfiguration = SecurityAutoConfiguration.class)
+@ActiveProfiles("test")
 class AccountControllerTest {
 
     @Autowired

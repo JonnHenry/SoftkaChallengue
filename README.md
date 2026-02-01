@@ -1,14 +1,14 @@
 # 📌 Sofka Challenge – Banking Microservices
 
-Este proyecto implementa una **arquitectura de microservicios** para la gestión de **clientes, cuentas bancarias y movimientos**, desarrollado como parte del **Sofka Challenge**.  
-
-Se utilizó **una arquitectura por capas** para separar responsabilidades y mejorar la mantenibilidad del código, así como **una librería compartida (`common-lib`)** que contiene componentes reutilizables para ambos microservicios.
+Este proyecto implementa una **arquitectura de microservicios** para la gestión de **clientes, cuentas bancarias y movimientos**, desarrollado como parte del **Sofka Challenge**.
 
 La solución utiliza **Spring Boot**, **Apache Kafka** para comunicación asíncrona, **PostgreSQL** como base de datos y **Docker Compose** para el despliegue completo del entorno.
 
 ---
-
 ## 🧱 Arquitectura
+
+Se utilizó **una arquitectura por capas** para separar responsabilidades y mejorar la mantenibilidad del código. Esta arquitectura se encuentra implementada en las ramas `develop` y `master`. Adicionalmente, se implementó **una arquitectura hexagonal**, la cual está disponible en la rama `hexagonalArchitecture`.
+ También se emplea **una librería compartida (`common-lib`)** que contiene componentes reutilizables para ambos microservicios.
 
 El sistema está compuesto por los siguientes servicios:
 

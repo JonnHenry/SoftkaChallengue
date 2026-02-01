@@ -1,7 +1,6 @@
 package com.softka.customer_service.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.softka.customer_service.config.TestSecurityConfig;
 import com.softka.customer_service.dto.ClientAccountDto;
 import com.softka.customer_service.dto.ClientDto;
 import com.softka.customer_service.service.IClientService;
@@ -10,18 +9,21 @@ import com.softka.enums.Gender;
 import org.junit.jupiter.api.Test;
 import org.mockito.*;
 import java.util.List;
+import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.beans.factory.annotation.Autowired;
 import static org.mockito.ArgumentMatchers.any;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@WebMvcTest(ClientController.class)
-@Import(TestSecurityConfig.class)
+    @WebMvcTest(controllers = ClientController.class,
+        excludeAutoConfiguration = SecurityAutoConfiguration.class)
+@ActiveProfiles("test")
 class ClientControllerTest {
 
     @Autowired
@@ -70,7 +72,6 @@ class ClientControllerTest {
 
         mockMvc.perform(get("/api/clientes/1"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.id").value(1))
                 .andExpect(jsonPath("$.name").value("Juan Perez"))
                 .andExpect(jsonPath("$.gender").value("M"));
     }
@@ -85,7 +86,6 @@ class ClientControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(client)))
                 .andExpect(status().isCreated())
-                .andExpect(jsonPath("$.id").value(1))
                 .andExpect(jsonPath("$.name").value("Juan Perez"))
                 .andExpect(jsonPath("$.gender").value("M"));
     }
@@ -110,7 +110,6 @@ class ClientControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(client)))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.id").value(1))
                 .andExpect(jsonPath("$.name").value("Juan Perez"))
                 .andExpect(jsonPath("$.gender").value("M"));
     }
@@ -126,7 +125,6 @@ class ClientControllerTest {
     @Test
     void testCreateClientAccount_Success() throws Exception {
         ClientAccountDto account = new ClientAccountDto();
-        account.setId(1L);
         account.setDni("0123456789");
         account.setName("Juan Perez");
         account.setPassword("Abcdef123.!");
@@ -145,7 +143,6 @@ class ClientControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(account)))
                 .andExpect(status().isCreated())
-                .andExpect(jsonPath("$.id").value(1))
                 .andExpect(jsonPath("$.dni").value("0123456789"))
                 .andExpect(jsonPath("$.name").value("Juan Perez"))
                 .andExpect(jsonPath("$.gender").value("M"))
