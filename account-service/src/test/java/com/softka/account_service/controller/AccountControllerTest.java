@@ -2,25 +2,27 @@ package com.softka.account_service.controller;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.softka.account_service.config.TestSecurityConfig;
-import com.softka.account_service.dto.AccountDto;
-import com.softka.account_service.service.IAccountService;
+import com.softka.account_service.application.port.in.AccountService;
+import com.softka.account_service.infrastructure.dto.AccountDto;
+import com.softka.account_service.infrastructure.controller.AccountController;
 import com.softka.enums.AccountType;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import java.util.List;
 import static org.mockito.ArgumentMatchers.any;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@WebMvcTest(AccountController.class)
-@Import(TestSecurityConfig.class)
+@WebMvcTest(controllers = AccountController.class,
+        excludeAutoConfiguration = SecurityAutoConfiguration.class)
+@ActiveProfiles("test")
 class AccountControllerTest {
 
     @Autowired
@@ -30,7 +32,7 @@ class AccountControllerTest {
     private ObjectMapper objectMapper;
 
     @MockBean
-    private IAccountService IAccountService;
+    private AccountService AccountService;
 
     @Test
     void testGetAll() throws Exception {
@@ -38,7 +40,7 @@ class AccountControllerTest {
                 new AccountDto(1L, "0000000001", AccountType.Ahorro, 100.0, true, 1L, null)
         );
 
-        Mockito.when(IAccountService.getAll()).thenReturn(accounts);
+        Mockito.when(AccountService.getAll()).thenReturn(accounts);
 
         mockMvc.perform(get("/api/cuentas"))
                 .andExpect(status().isOk())
@@ -51,7 +53,7 @@ class AccountControllerTest {
     void testGetById() throws Exception {
         AccountDto account = new AccountDto(1L, "0000000001", AccountType.Ahorro, 100.0, true, 1L, null);
 
-        Mockito.when(IAccountService.getById(1L)).thenReturn(account);
+        Mockito.when(AccountService.getById(1L)).thenReturn(account);
 
         mockMvc.perform(get("/api/cuentas/1"))
                 .andExpect(status().isOk())
@@ -64,7 +66,7 @@ class AccountControllerTest {
     void testCreate() throws Exception {
         AccountDto account = new AccountDto(1L, "0000000001", AccountType.Ahorro, 100.0, true, 1L, null);
 
-        Mockito.when(IAccountService.create(any(AccountDto.class))).thenReturn(account);
+        Mockito.when(AccountService.create(any(AccountDto.class))).thenReturn(account);
 
         mockMvc.perform(post("/api/cuentas")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -79,7 +81,7 @@ class AccountControllerTest {
     void testUpdate() throws Exception {
         AccountDto account = new AccountDto(1L, "0000000001", AccountType.Ahorro, 100.0, true, 1L, null);
 
-        Mockito.when(IAccountService.update(any(AccountDto.class))).thenReturn(account);
+        Mockito.when(AccountService.update(any(AccountDto.class))).thenReturn(account);
 
         mockMvc.perform(put("/api/cuentas/1")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -92,7 +94,7 @@ class AccountControllerTest {
 
     @Test
     void testDelete() throws Exception {
-        Mockito.doNothing().when(IAccountService).deleteById(1L);
+        Mockito.doNothing().when(AccountService).deleteById(1L);
 
         mockMvc.perform(delete("/api/cuentas/1"))
                 .andExpect(status().isNoContent());

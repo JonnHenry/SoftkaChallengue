@@ -3,6 +3,7 @@ package com.softka.account_service;
 import jakarta.persistence.EntityManager;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.ApplicationContext;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -30,8 +31,8 @@ class AccountServiceApplicationTests {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
-	@Test
-	void contextLoads() {
+    @Test
+    void contextLoads() {
         // Context
         assertThat(applicationContext).isNotNull();
 
@@ -44,10 +45,10 @@ class AccountServiceApplicationTests {
         assertThat(transactionManager).isNotNull();
 
         //Critical beans
-        assertThat(applicationContext.containsBean("accountServiceImpl"))
+        assertThat(applicationContext.containsBean("accountService"))
                 .isTrue();
 
-        assertThat(applicationContext.containsBean("transactionServiceImpl"))
+        assertThat(applicationContext.containsBean("transactionService"))
                 .isTrue();
 
         assertThat(applicationContext.containsBean("accountRepository"))
@@ -55,6 +56,6 @@ class AccountServiceApplicationTests {
 
         assertThat(applicationContext.containsBean("transactionRepository"))
                 .isTrue();
-	}
+    }
 
 }

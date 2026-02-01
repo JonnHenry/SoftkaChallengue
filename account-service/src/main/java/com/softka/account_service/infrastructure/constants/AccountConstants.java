@@ -1,0 +1,18 @@
+package com.softka.account_service.infrastructure.constants;
+
+public class AccountConstants {
+
+    private AccountConstants() {}
+
+    // Messages exception
+    public static final String ACCOUNT_ALREADY_EXIST = "Account already exist with account id %d";
+    public static final String ACCOUNT_NUMBER_ALREADY_EXIST = "Account already exist with account number %s";
+    public static final String ACCOUNT_NOT_EXIST = "Account does not exist with number %d";
+    public static final String PARTIAL_ACCOUNT_NULL = "Status cannot be null";
+
+    public static final String TRANSACTION_ALREADY_EXIST = "Transaction already exist with account number %d";
+    public static final String TRANSACTION_NOT_EXIST = "Transaction does not exist with number %d";
+    public static final String TRANSACTION_NOT_EXECUTABLE = "Saldo no disponible";
+    public static final String USER_ACCOUNT_NOT_EXIST = "User account not exist";
+
+}
