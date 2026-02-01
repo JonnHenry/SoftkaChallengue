@@ -42,7 +42,7 @@ public class KafkaConsumerConfig {
                 JsonDeserializer.class);
 
         JsonDeserializer<Event<?>> jsonDeserializer = new JsonDeserializer<>(Event.class, false);
-        jsonDeserializer.addTrustedPackages("com.softka.customer_service.events", "com.softka.account_service.events");
+        jsonDeserializer.addTrustedPackages("com.softka.events");
         jsonDeserializer.setUseTypeHeaders(false);
 
         return new DefaultKafkaConsumerFactory<>(props, new StringDeserializer(), jsonDeserializer);

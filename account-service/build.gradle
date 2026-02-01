@@ -5,7 +5,7 @@ plugins {
 }
 
 group = 'com.softka'
-version = '1.0.0-RELEASE'
+version = '1.0.1-RELEASE'
 description = 'Artifact to manage accounts'
 
 java {
